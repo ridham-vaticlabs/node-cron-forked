@@ -25,7 +25,7 @@ class Scheduler extends EventEmitter{
             for(let i = missedExecutions-1; i >= 0; i--){
                 const date = new Date(current_time - i * 1000);
                 let date_tmp = this.timeMatcher.apply(date);
-                if(lastExecution.getTime() < date_tmp.getTime() && (i === 0 || this.autorecover) && this.timeMatcher.match(date)){
+                if(Math.floor(lastExecution.getTime()/1000) < Math.floor(date_tmp.getTime()/1000) && (i === 0 || this.autorecover) && this.timeMatcher.match(date)){
                     this.emit('scheduled-time-matched', date_tmp);
                     date_tmp.setMilliseconds(0);
                     lastExecution = date_tmp;
